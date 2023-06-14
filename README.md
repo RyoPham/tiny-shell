@@ -1,5 +1,5 @@
 # tiny-shell
-##Usage
+## Usage
 Compile the project using following make command
 ```
 make build
