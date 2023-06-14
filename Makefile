@@ -11,7 +11,7 @@ TARGET = shell
 
 .PHONY: build clean
 
-build: $(OBJS)
+build: clean $(OBJS)
 	gcc $(INCLUDES) $(OBJS) -o $(TARGET).out
 
 %.o: %.c
