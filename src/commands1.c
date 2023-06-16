@@ -11,7 +11,7 @@ void cdFunc(int argc, char **argv) {
 }
 
 void dateFunc(int argc, char **argv) {
-
+	printf("date command\n");
 }
 
 void dirFunc(int argc, char **argv) {
