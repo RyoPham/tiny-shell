@@ -7,7 +7,7 @@ void exitFunc(int argc, char **argv) {
 }
 
 void cdFunc(int argc, char **argv) {
-
+	printf("cd command\n");
 }
 
 void dateFunc(int argc, char **argv) {
