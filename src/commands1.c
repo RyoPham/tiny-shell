@@ -15,7 +15,7 @@ void dateFunc(int argc, char **argv) {
 }
 
 void dirFunc(int argc, char **argv) {
-
+	printf("dir command\n");
 }
 
 void helpFunc(int argc, char **argv) {
