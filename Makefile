@@ -9,13 +9,18 @@ OBJS = $(SOURCES:.c=.o)
 
 TARGET = shell
 
-.PHONY: build clean
+.PHONY: build clean run
 
-build: clean $(OBJS)
-	gcc $(INCLUDES) $(OBJS) -o $(TARGET).out
+run: $(TARGET).out
+	./$(TARGET).out
+
+build: clean $(TARGET).out
+
+$(TARGET).out: $(OBJS)
+	gcc $(INCLUDES) $(OBJS) -Wall -o $@
 
 %.o: %.c
-	gcc $(INCLUDES) -c $< -o $@
+	gcc $(INCLUDES) -c -Wall $< -o $@
 
 clean:
 	rm -f $(SOURCE_DIR)/*.o $(TARGET).out
