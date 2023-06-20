@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <sys/prctl.h>
 #include "commands.h"
 #include "process.h"
 
@@ -32,6 +33,7 @@ void getArgs() {
 }	
 
 int main(void) {
+	prctl(PR_SET_CHILD_SUBREAPER, 1, 0, 0, 0);
 	while(1) {
 		killZombies();
 		getcwd(dir, SIZE);
