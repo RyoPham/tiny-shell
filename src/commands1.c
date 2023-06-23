@@ -44,8 +44,7 @@ void dateFunc(int argc, char **argv) {
    printf("Month: %s\n", months[month]);
    printf("Day: %d\n", day);
    printf("Time: %d:%d:%d\n", hour, min, sec);
-
-   return 0;
+	
 }
 
 void dirFunc(int argc, char **argv) {
