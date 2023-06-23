@@ -27,7 +27,25 @@ void cdFunc(int argc, char **argv) {
 }
 
 void dateFunc(int argc, char **argv) {
-	int
+	   time_t now = time(0);
+
+   struct tm *ltm = localtime(&now);
+
+   int year = 1900 + ltm->tm_year;
+   int month = ltm->tm_mon;
+   int day = ltm->tm_mday;
+   int hour = 1 + ltm->tm_hour;
+   int min = 1 + ltm->tm_min;
+   int sec = 1 + ltm->tm_sec;
+	
+   const char* months[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
+   printf("Year: %d\n", year);
+   printf("Month: %s\n", months[month]);
+   printf("Day: %d\n", day);
+   printf("Time: %d:%d:%d\n", hour, min, sec);
+
+   return 0;
 }
 
 void dirFunc(int argc, char **argv) {
