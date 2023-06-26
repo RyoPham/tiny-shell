@@ -108,3 +108,11 @@ void dirFunc(int argc, char **argv) {
 
     closedir(dirp);
 }
+
+void pathFunc(int argc, char **argv) {
+
+}
+
+void addpathFunc(int argc, char **argv) {
+    
+}
