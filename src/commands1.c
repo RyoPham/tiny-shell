@@ -82,7 +82,7 @@ void dirFunc(int argc, char **argv) {
     printf("=========================================================================\n");
 
     while ((entry = readdir(dirp)) != NULL) {
-        char full_path[256];
+        char full_path[257];
         snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
 
         if (lstat(full_path, &file_info) == -1) {
