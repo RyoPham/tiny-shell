@@ -18,11 +18,12 @@ run: $(TARGET).out
 
 build: clean $(TARGET).out
 
-$(TARGET).out: $(OBJS)
-	gcc $(INCLUDES) $(OBJS) -Wall -o $@
+$(TARGET).out: $(SOURCES)
+	gcc $(INCLUDES) $(SOURCES) -Wall -o $@
+	# gcc $(INCLUDES) $(OBJS) -Wall -o $@
 
 %.o: %.c
 	gcc $(INCLUDES) -c -Wall $< -o $@
 
 clean:
-	rm -f $(SOURCE_DIR)/*.o $(TARGET).out
+	rm -f $(TARGET).out
