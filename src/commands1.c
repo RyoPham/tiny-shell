@@ -6,8 +6,12 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include "commands.h"
+#include "process.h"
 
 void exitFunc(int argc, char **argv) {
+    while(killChild()) {
+        killZombies();
+    }
 	exit(0);
 }
 
@@ -103,8 +107,4 @@ void dirFunc(int argc, char **argv) {
     }
 
     closedir(dirp);
-}
-
-void helpFunc(int argc, char **argv) {
-
 }
