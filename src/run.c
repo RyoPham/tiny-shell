@@ -3,8 +3,32 @@
 #include <string.h>
 #include "commands.h"
 
-void (*func_list[])(int argc, char **argv) = {exitFunc, cdFunc, dateFunc, dirFunc, helpFunc, execFunc, listFunc, killFunc, stopFunc, resumeFunc};
-const char *func_name_list[] = {"exit", "cd", "date", "dir", "help", "exec", "list", "kill", "stop", "resume"};
+void (*func_list[])(int argc, char **argv) = {
+        exitFunc, 
+        cdFunc, 
+        dateFunc, 
+        dirFunc, 
+        helpFunc, 
+        execFunc, 
+        listFunc, 
+        killFunc, 
+        stopFunc, 
+        resumeFunc,
+        clearFunc
+        };
+const char *func_name_list[] = {
+        "exit", 
+        "cd", 
+        "date", 
+        "dir", 
+        "help", 
+        "exec", 
+        "list", 
+        "kill", 
+        "stop", 
+        "resume",
+        "clear"
+        };
 
 void run(int argc, char **argv) {
         if(argc == 0) return;

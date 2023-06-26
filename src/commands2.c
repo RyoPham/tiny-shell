@@ -28,6 +28,17 @@ int shiftRight(int argc, char **argv, int m) {
 	return argc + m;
 }
 
+void clearFunc(int argc, char **argv) {
+    int pid = fork(), status;
+    if(pid == 0) {
+        execl("/bin/clear", "/bin/clear", (char *)NULL);
+        return;
+    }
+    else {
+        waitpid(pid, &status, 0);
+    }
+}
+
 void execFunc(int argc, char **argv) {
 	if(argc < 2) {
 		return;
