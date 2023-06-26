@@ -14,7 +14,9 @@ void (*func_list[])(int argc, char **argv) = {
         killFunc, 
         stopFunc, 
         resumeFunc,
-        clearFunc
+        clearFunc,
+        pathFunc,
+        addpathFunc
         };
 const char *func_name_list[] = {
         "exit", 
@@ -27,7 +29,9 @@ const char *func_name_list[] = {
         "kill", 
         "stop", 
         "resume",
-        "clear"
+        "clear",
+        "path",
+        "addpath"
         };
 
 void run(int argc, char **argv) {
