@@ -11,22 +11,34 @@ void exitFunc(int argc, char **argv) {
 	exit(0);
 }
 
-void cdFunc(int argc, char **argv) {
-	char * temp;
-	temp = argv[1];
-	if(argc > 3) {
-		printf("Error\n");
-		printf("Too many arguments\n");
-	}
+void cdFunc(int argc, char **argv){
+    char *temp = argv[1];
 
-	else if(temp == NULL || *temp == '~')
-		chdir("/home");
-	
-	else {
-		int change = chdir(temp);
-		if(change < 1)
-			printf("Directory does not exist :'(");
-	}
+    if (argc > 2) {
+        printf("Error: Too many arguments\n");
+        return;
+    }
+
+    if (temp == NULL || *temp == '~') {
+        if (chdir(getenv("HOME")) != 0) {
+            printf("Failed to change directory\n");
+            return;
+        }
+    } 
+    
+    else if (strcmp(temp, "..") == 0) {
+        if (chdir("..") != 0) {
+            printf("Failed to change directory\n");
+            return;
+        }
+    } 
+    
+    else {
+        if (chdir(temp) != 0) {
+            printf("Directory does not exist\n");
+            return;
+        }
+    }
 }
 
 void dateFunc(int argc, char **argv) {
