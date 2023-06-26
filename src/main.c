@@ -2,14 +2,16 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <sys/prctl.h>
 #include "commands.h"
+#include "process.h"
 
 char buff[SIZE + 5], dir[SIZE + 5];
 char *argv[SIZE + 5];
 int argc;
 
 void getArgs() {
-	int i = 0, j, k = 0;
+	int i = 0, j;
 	argc = 0;
 	while(buff[i] != '\0') {
 		if(isspace(buff[i])) {
@@ -27,10 +29,13 @@ void getArgs() {
 			++i;
 		}
 	}
+	argv[argc] = NULL;
 }	
 
 int main(void) {
+	prctl(PR_SET_CHILD_SUBREAPER, 1, 0, 0, 0);
 	while(1) {
+		killZombies();
 		getcwd(dir, SIZE);
 		printf("(tiny shell) %s>", dir);
 		fgets(buff, SIZE, stdin);

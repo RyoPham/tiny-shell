@@ -2,20 +2,27 @@ SOURCE_DIR = ./src
 SOURCES = $(SOURCE_DIR)/main.c \
 	  $(SOURCE_DIR)/run.c \
 	  $(SOURCE_DIR)/commands1.c \
-	  $(SOURCE_DIR)/commands2.c
+	  $(SOURCE_DIR)/commands2.c \
+	  $(SOURCE_DIR)/process.c \
+	  $(SOURCE_DIR)/list.c
 INCLUDES = -I ./include
 
 OBJS = $(SOURCES:.c=.o)
 
 TARGET = shell
 
-.PHONY: build clean
+.PHONY: build clean run
 
-build: clean $(OBJS)
-	gcc $(INCLUDES) $(OBJS) -o $(TARGET).out
+run: $(TARGET).out
+	./$(TARGET).out
+
+build: clean $(TARGET).out
+
+$(TARGET).out: $(OBJS)
+	gcc $(INCLUDES) $(OBJS) -Wall -o $@
 
 %.o: %.c
-	gcc $(INCLUDES) -c $< -o $@
+	gcc $(INCLUDES) -c -Wall $< -o $@
 
 clean:
 	rm -f $(SOURCE_DIR)/*.o $(TARGET).out
