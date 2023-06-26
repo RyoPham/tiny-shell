@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>
+#include <sys/types.h>
 #include "list.h"
 
 int isNumeric(char *s);
@@ -21,5 +22,7 @@ void getProcess(struct List* list_pid, struct List* list_ppid);
 void getChildProcess(struct List* list_child_pid, struct List* list_child_ppid, pid_t pid, struct List list_pid, struct List list_ppid);
 
 void killZombies();
+
+int killChild();
 
 #endif

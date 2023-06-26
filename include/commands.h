@@ -14,6 +14,7 @@ void listFunc(int argc, char **argv);
 void killFunc(int argc, char **argv);
 void stopFunc(int argc, char **argv);
 void resumeFunc(int argc, char **argv);
+void clearFunc(int argc, char **argv);
 
 void run(int argc, char **argv);
 

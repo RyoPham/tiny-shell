@@ -6,8 +6,12 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include "commands.h"
+#include "process.h"
 
 void exitFunc(int argc, char **argv) {
+    while(killChild()) {
+        killZombies();
+    }
 	exit(0);
 }
 
@@ -82,7 +86,7 @@ void dirFunc(int argc, char **argv) {
     printf("=========================================================================\n");
 
     while ((entry = readdir(dirp)) != NULL) {
-        char full_path[256];
+        char full_path[257];
         snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
 
         if (lstat(full_path, &file_info) == -1) {
@@ -103,8 +107,4 @@ void dirFunc(int argc, char **argv) {
     }
 
     closedir(dirp);
-}
-
-void helpFunc(int argc, char **argv) {
-
 }

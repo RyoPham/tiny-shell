@@ -9,6 +9,10 @@
 #include "commands.h"
 #include "list.h"
 #include "process.h"
+#include "help.h"
+
+pid_t pid_running;
+int is_running = 0;
 
 int shiftLeft(int argc, char **argv, int m) {
 	int i;
@@ -26,6 +30,21 @@ int shiftRight(int argc, char **argv, int m) {
 	}
 	argv[argc + m] = NULL;
 	return argc + m;
+}
+
+void clearFunc(int argc, char **argv) {
+	if(argc > 1) {
+		printf("Error: Too many arguments\n");
+		return;
+	}
+    int pid = fork(), status;
+    if(pid == 0) {
+        execl("/bin/clear", "/bin/clear", (char *)NULL);
+        return;
+    }
+    else {
+        waitpid(pid, &status, 0);
+    }
 }
 
 void execFunc(int argc, char **argv) {
@@ -76,12 +95,14 @@ void execFunc(int argc, char **argv) {
 		exit(0);
 	}
 	else if(background_flag == 0) {
+		pid_running = pid;
+		is_running = 1;
 		waitpid(pid, &status, 0);
 	}
 }
 
 void listFunc(int argc, char **argv) {
-	int flag_all = 0;
+	int flag_all = 0, flag_find = 0;
 	pid_t pid = getpid();
 	struct List list_pid, list_ppid;
 	struct List list_child_pid, list_child_ppid;
@@ -90,8 +111,31 @@ void listFunc(int argc, char **argv) {
 	static char pname[256];
 	char status;
 
-	if(argc >= 2 && !strcmp(argv[1], "-all")) {
-		flag_all = 1;
+	if(argc >= 2) {
+		if(!strcmp(argv[1], "-all")) {
+			flag_all = 1;
+			if(argc > 2) {
+				printf("Error: Too many arguments\n");
+				return;
+			}
+		}
+		else if(!strcmp(argv[1], "-f")) {
+			flag_find = 1;
+			flag_all = 1;
+			if(argc < 3) {
+				printf("Error: Too few arguments\n");
+				return;
+			}
+			else if(argc > 3) {
+				printf("Error: Too many arguments\n");
+				return;
+			}
+		}
+		else {
+			printf("\nCannot recognize your arguments\n");
+			listFuncHelp(argc, argv);
+			return;
+		}
 	}
 
 	getProcess(&list_pid, &list_ppid);
@@ -111,7 +155,9 @@ void listFunc(int argc, char **argv) {
 		++process_count;
 		getProcessInfo(cur_pid->value, pname, &status);
 		// printf("%u %u\n", cur_pid->value, cur_ppid->value);
-		printf("%12u %12u %-6c %-20s\n", cur_pid->value, cur_ppid->value, status, pname);
+		if(!flag_find || strstr(pname, argv[2])) {
+			printf("%12u %12u %-6c %-20s\n", cur_pid->value, cur_ppid->value, status, pname);
+		}
 		cur_pid = cur_pid->next;
 		cur_ppid = cur_ppid->next;
 	}
@@ -128,6 +174,10 @@ void killFunc(int argc, char **argv) {
 		printf("Usage: kill <process id>\n");
 		return;
 	}
+	if(argc > 2) {
+		printf("Error: Too many arguments\n");
+		return;
+	}
 	pid_t pid = atoi(argv[1]);
 	kill(pid, 9); //SIGKILL - 9
 }
@@ -137,6 +187,10 @@ void stopFunc(int argc, char **argv) {
 		printf("Usage: resume <process id>\n");
 		return;
 	}
+	if(argc > 2) {
+		printf("Error: Too many arguments\n");
+		return;
+	}
 	pid_t pid = atoi(argv[1]);
 	kill(pid, 19); //SIGSTOP - 19
 }
@@ -144,6 +198,10 @@ void stopFunc(int argc, char **argv) {
 void resumeFunc(int argc, char **argv) {
 	if(argc < 2) {
 		printf("Usage: resume <process id>\n");
+		return;
+	}
+	if(argc > 2) {
+		printf("Error: Too many arguments\n");
 		return;
 	}
 	pid_t pid = atoi(argv[1]);
