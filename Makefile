@@ -4,7 +4,8 @@ SOURCES = $(SOURCE_DIR)/main.c \
 	  $(SOURCE_DIR)/commands1.c \
 	  $(SOURCE_DIR)/commands2.c \
 	  $(SOURCE_DIR)/process.c \
-	  $(SOURCE_DIR)/list.c
+	  $(SOURCE_DIR)/list.c \
+	  $(SOURCE_DIR)/help.c
 INCLUDES = -I ./include
 
 OBJS = $(SOURCES:.c=.o)

@@ -135,4 +135,41 @@ void killZombies() {
 		cur_pid = cur_pid->next;
 		cur_ppid = cur_ppid->next;
 	}
+
+	clear(&list_pid);
+	clear(&list_ppid);
+	clear(&list_child_pid);
+	clear(&list_child_ppid);
+}
+
+int killChild() {
+	struct List list_pid, list_ppid;
+	struct List list_child_pid, list_child_ppid;
+	struct Node* cur_pid;
+	struct Node* cur_ppid;
+	pid_t pid = getpid();
+	int cnt = 0;
+
+	getProcess(&list_pid, &list_ppid);
+	getChildProcess(&list_child_pid, &list_child_ppid, pid, list_pid, list_ppid);
+
+	cur_pid = list_child_pid.head;
+	cur_ppid = list_child_ppid.head;
+
+	while(cur_pid != NULL) {
+		if(cur_pid->value != pid) {
+			if(kill(cur_pid->value, 9) == 0) {
+				++cnt;
+			}
+		}
+		cur_pid = cur_pid->next;
+		cur_ppid = cur_ppid->next;
+	}
+
+	clear(&list_pid);
+	clear(&list_ppid);
+	clear(&list_child_pid);
+	clear(&list_child_ppid);
+
+	return cnt;
 }

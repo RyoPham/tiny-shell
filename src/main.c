@@ -35,11 +35,11 @@ void getArgs() {
 int main(void) {
 	prctl(PR_SET_CHILD_SUBREAPER, 1, 0, 0, 0);
 	while(1) {
-		killZombies();
 		getcwd(dir, SIZE);
 		printf("(tiny shell) %s>", dir);
 		fgets(buff, SIZE, stdin);
 		getArgs();
+		killZombies();
 		run(argc, argv);
 	}
 }
