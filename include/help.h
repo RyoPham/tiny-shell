@@ -6,6 +6,8 @@ void cdFuncHelp(int argc, char **argv);
 void dateFuncHelp(int argc, char **argv);
 void dirFuncHelp(int argc, char **argv);
 void helpFuncHelp(int argc, char **argv);
+void pathFuncHelp(int argc, char **argv);
+void addpathFuncHelp(int argc, char **argv);
 
 void execFuncHelp(int argc, char **argv);
 void listFuncHelp(int argc, char **argv);

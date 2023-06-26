@@ -8,6 +8,8 @@ void cdFunc(int argc, char **argv);
 void dateFunc(int argc, char **argv);
 void dirFunc(int argc, char **argv);
 void helpFunc(int argc, char **argv);
+void pathFunc(int argc, char **argv);
+void addpathFunc(int argc, char **argv);
 
 void execFunc(int argc, char **argv);
 void listFunc(int argc, char **argv);

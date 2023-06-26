@@ -16,7 +16,9 @@ void (*help_list[])(int argc, char **argv) = {
         killFuncHelp, 
         stopFuncHelp, 
         resumeFuncHelp,
-        clearFuncHelp
+        clearFuncHelp,
+        pathFuncHelp,
+        addpathFuncHelp
         };
 
 void exitFuncHelp(int argc, char **argv) {
@@ -41,6 +43,14 @@ void helpFuncHelp(int argc, char **argv) {
         return;
     }
     printf("\nUsage: help [name of supported command]\n");
+}
+
+void pathFuncHelp(int argc, char **argv) {
+
+}
+
+void addpathFuncHelp(int argc, char **argv) {
+
 }
 
 void execFuncHelp(int argc, char **argv) {
