@@ -11,6 +11,9 @@
 #include "process.h"
 #include "help.h"
 
+pid_t pid_running;
+int is_running = 0;
+
 int shiftLeft(int argc, char **argv, int m) {
 	int i;
 	for(i = 0; i + m < argc; ++i) {
@@ -92,6 +95,8 @@ void execFunc(int argc, char **argv) {
 		exit(0);
 	}
 	else if(background_flag == 0) {
+		pid_running = pid;
+		is_running = 1;
 		waitpid(pid, &status, 0);
 	}
 }
