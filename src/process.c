@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "list.h"
