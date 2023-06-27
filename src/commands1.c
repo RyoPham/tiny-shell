@@ -61,7 +61,7 @@ void dateFunc(int argc, char **argv) {
 }
 
 void dirFunc(int argc, char **argv) {
-	char *path;
+    char *path;
     if (argc < 2) {
         path = ".";
     }
@@ -82,11 +82,11 @@ void dirFunc(int argc, char **argv) {
         return;
     }
 
-    printf("%-15s%-15s%-15s%-15s\n", "Date", "Time", "Type", "Name");
+    printf("%-15s%-15s%-15s%-15s%-15s\n", "Date", "Time", "Type", "Name", "Size (bytes)");
     printf("=========================================================================\n");
 
     while ((entry = readdir(dirp)) != NULL) {
-        char full_path[257];
+        char full_path[256];
         snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
 
         if (lstat(full_path, &file_info) == -1) {
@@ -99,10 +99,10 @@ void dirFunc(int argc, char **argv) {
         strftime(time, sizeof(time), "%H:%M", time_info);
 
         if (S_ISREG(file_info.st_mode)) {
-            printf("%-15s%-15s%-15s%-15s\n", date, time, "<FILE>", entry->d_name);
+            printf("%-15s%-15s%-15s%-15s%-15lld\n", date, time, "<FILE>", entry->d_name, (long long)file_info.st_size);
         }
         else if (S_ISDIR(file_info.st_mode)) {
-            printf("%-15s%-15s%-15s%-15s\n", date, time, "<FOLDER>", entry->d_name);
+            printf("%-15s%-15s%-15s%-15s%-15lld\n", date, time, "<FOLDER>", entry->d_name, (long long)file_info.st_size);
         }
     }
 
