@@ -126,13 +126,13 @@ void pathFunc(int argc, char **argv) {
 
 
 void addpathFunc(int argc, char **argv) {
-    if (argc < 3) {
-        printf("Insufficient arguments. Usage: addpathFunc <variable> <path>\n");
+    if (argc < 2) {
+        printf("Insufficient arguments. Usage: addpath <variable> <path>\n");
         return;
     }
 
-    const char *variable = argv[1];
-    const char *path = argv[2];
+    const char *variable = argv[0];
+    const char *path = argv[1];
 
     int result = setenv(variable, path, 1);
 
