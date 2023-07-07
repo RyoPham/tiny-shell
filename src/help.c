@@ -12,6 +12,7 @@ void (*help_list[])(int argc, char **argv) = {
         dirFuncHelp, 
         helpFuncHelp, 
         execFuncHelp, 
+        runbashFuncHelp,
         listFuncHelp, 
         killFuncHelp, 
         stopFuncHelp, 
@@ -49,7 +50,7 @@ void dateFuncHelp(int argc, char **argv) {
 }
 
 void dirFuncHelp(int argc, char **argv) {
-printf("\n%-10s: List files in the specified directory\n", "dir");
+printf("\n%-10s: List files in a specified directory (current directory by default)\n", "dir");
     if (argc == 1) {
         return;
     }
@@ -68,26 +69,25 @@ void helpFuncHelp(int argc, char **argv) {
 }
 
 void pathFuncHelp(int argc, char **argv) {
-    printf("\n%-10s: Display the value of an environment variable\n", "path");
+    printf("\n%-10s: Display value of an environment variable (display all by default)\n", "path");
     if (argc == 1) {
         return;
     } 
     else {
-        printf("\nUsage: path [VARIABLE]\n");
-        printf("  %-10s  Display the value of the specified environment VARIABLE\n","[VARIABLE]");
+        printf("\nUsage: path [var1] [var2] ...\n");
     }
 }
 
 
 void addpathFuncHelp(int argc, char **argv) {
-    printf("\n%-14s: Add a directory to the specified environment variable\n", "addpathFunc");
+    printf("\n%-10s: Add a value to the specified environment variable\n", "addpath");
     if(argc == 1){
         return;
     }
     else{
         printf("\nUsage: addpathFunc <VARIABLE> <PATH>\n");
-        printf("  %-10s    Specify the environment variable\n", "[VARIABLE]");
-        printf("  %-10s        Specify the directory path to be added\n", "PATH");
+        printf("  %-10s    Specify the environment variable\n", "<VARIABLE>");
+        printf("  %-10s    Specify the value for variable\n", "<PATH>");
     }
 }
 
@@ -100,6 +100,18 @@ void execFuncHelp(int argc, char **argv) {
     printf("\nOptions:\n");
     printf("  %-10s foreground mode\n", "-f");
     printf("  %-10s background mode\n", "-b");
+    printf("  %-10s create process in other terminal\n", "-B");
+}
+
+void runbashFuncHelp(int argc, char **argv) {
+    printf("\n%-10s: Run a bash file (in foreground mode by default)\n", "runbash");
+    if(argc == 1) {
+        return;
+    }
+    printf("\nUsage: runbash [OPTION] <file> [arg1] [arg2] ...\n");
+    printf("\nOptions:\n");
+    printf("  %-10s foreground mode\n", "-f");
+    printf("  %-10s background mode (not recommend)\n", "-b");
     printf("  %-10s create process in other terminal\n", "-B");
 }
 
@@ -118,7 +130,7 @@ void killFuncHelp(int argc, char **argv) {
     if(argc == 1) {
         return;
     }
-    printf("\nUsage: kill <process id>\n");
+    printf("\nUsage: kill <pid1> <pid2> ...\n");
 }
 
 void stopFuncHelp(int argc, char **argv) {
@@ -126,7 +138,7 @@ void stopFuncHelp(int argc, char **argv) {
     if(argc == 1) {
         return;
     }
-    printf("\nUsage: stop <process id>\n");
+    printf("\nUsage: stop <pid1> <pid2> ...\n");
 }
 
 void resumeFuncHelp(int argc, char **argv) {
@@ -134,7 +146,7 @@ void resumeFuncHelp(int argc, char **argv) {
     if(argc == 1) {
         return;
     }
-    printf("\nUsage: resume <process id>\n");
+    printf("\nUsage: resume <pid1> <pid2> ...\n");
 }
 
 void clearFuncHelp(int argc, char **argv) {

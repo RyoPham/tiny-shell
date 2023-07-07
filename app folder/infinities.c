@@ -1,5 +1,5 @@
 /**
- * A simple program creates some non-stop processes (8 processes).
+ * A simple program creates some non-stop processes (4 processes).
 */
 
 #include <stdio.h>

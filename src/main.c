@@ -80,6 +80,15 @@ int main(void) {
 		fgets(buff, SIZE, stdin);
 		getArgs();
 		killZombies();
+		// printf("argc = %d\n", argc);
+		// printf("argv[] = [");
+		// for(int i = 0; i < argc; ++i) {
+		// 	printf("%s", argv[i]);
+		// 	if(i + 1 < argc) {
+		// 		printf(", ");
+		// 	}
+		// }
+		// printf("]\n");
 		run(argc, argv);
 	}
 }
