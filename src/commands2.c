@@ -47,6 +47,10 @@ void clearFunc(int argc, char **argv) {
     }
 }
 
+void do_nothing() {
+	printf("Here we go\n");
+}
+
 void execFunc(int argc, char **argv) {
 	if(argc < 2) {
 		return;
@@ -76,6 +80,8 @@ void execFunc(int argc, char **argv) {
 
 	int pid = fork(), status;
 	if(pid == 0) {
+		setpgid(0, 0);
+		signal(SIGINT, do_nothing);
 		argc = shiftLeft(argc, argv, 1 + flag_count);
 		if(new_terminal) {
 			argc = shiftRight(argc, argv, 3);
@@ -98,6 +104,7 @@ void execFunc(int argc, char **argv) {
 		pid_running = pid;
 		is_running = 1;
 		waitpid(pid, &status, 0);
+		is_running = 0;
 	}
 }
 
@@ -150,13 +157,14 @@ void listFunc(int argc, char **argv) {
 		cur_ppid = list_ppid.head;
 	}
 	int process_count = 0;
-	printf("%12s %12s %-6s %-20s\n", "PID", "PPID", "STATUS", "NAME");
+	printf("%10s %10s %-6s %-20s\n", "PID", "PPID", "STATUS", "NAME");
+	printf("=========================================================\n");
 	while(cur_pid != NULL) {
 		++process_count;
 		getProcessInfo(cur_pid->value, pname, &status);
 		// printf("%u %u\n", cur_pid->value, cur_ppid->value);
 		if(!flag_find || strstr(pname, argv[2])) {
-			printf("%12u %12u %-6c %-20s\n", cur_pid->value, cur_ppid->value, status, pname);
+			printf("%10u %10u %-6c %-20s\n", cur_pid->value, cur_ppid->value, status, pname);
 		}
 		cur_pid = cur_pid->next;
 		cur_ppid = cur_ppid->next;

@@ -23,15 +23,40 @@ void getArgs() {
 			++i;
 			continue;
 		}
-		j = i + 1;
-		while(!isspace(buff[j]) && buff[j] != '\0') {
-			++j;
+		if(buff[i] == '\"') {
+			j = i + 1;
+			while(buff[j] != '\0' && buff[j] != '\"') {
+				++j;
+			}
+			if(buff[j] == '\"') {
+				argv[argc++] = &buff[i + 1];
+				buff[i] = buff[j] =  '\0';
+				i = j + 1;
+			}
+			else {
+				j = i + 1;
+				while(!isspace(buff[j]) && buff[j] != '\0') {
+					++j;
+				}
+				argv[argc++] = &buff[i];
+				i = j;
+				if(buff[i] != '\0') {
+					buff[i] = '\0';
+					++i;
+				}	
+			}
 		}
-		argv[argc++] = &buff[i];
-		i = j;
-		if(buff[i] != '\0') {
-			buff[i] = '\0';
-			++i;
+		else {
+			j = i + 1;
+			while(!isspace(buff[j]) && buff[j] != '\0') {
+				++j;
+			}
+			argv[argc++] = &buff[i];
+			i = j;
+			if(buff[i] != '\0') {
+				buff[i] = '\0';
+				++i;
+			}
 		}
 	}
 	argv[argc] = NULL;
@@ -40,7 +65,9 @@ void getArgs() {
 void sigintHandler() {
 	if(is_running) {
 		kill(pid_running, 9);
+		is_running = 0;
 	}
+	signal(SIGINT, sigintHandler);
 	return;
 }
 
