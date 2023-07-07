@@ -1,0 +1,10 @@
+.PHONY: build clean
+
+build: clock.c hello.c infinities.c env_var.c hello.sh loop.sh
+	gcc clock.c -o clock
+	gcc hello.c -o hello
+	gcc infinities.c -o infinities
+	gcc env_var.c -o env_var
+
+clean: 
+	rm -rf clock hello infinities env_var
