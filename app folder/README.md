@@ -1,6 +1,6 @@
 # Description
 
-Thư mục này chứa một số chương trình được sử dụng để kiểm thử các tính năng của tiny-shell.
+Thư mục này chứa một số chương trình được sử dụng để kiểm thử các tính năng của **tiny-shell**.
 
 # Usage
 Compile các chương trình C trong thư mục này bằng make:
