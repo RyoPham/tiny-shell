@@ -110,9 +110,36 @@ void dirFunc(int argc, char **argv) {
 }
 
 void pathFunc(int argc, char **argv) {
-
+    if (argc > 1) {
+        printf("Too many arguments.\n");
+    } else if (argv != NULL) {
+        char *value = getenv(argv[0]);
+        if (value != NULL) {
+            printf("%s=%s\n", argv[0], value);
+        } else {
+            printf("The environment variable %s does not exist.\n", argv[0]);
+        }
+    } else {
+        printf("No argument provided.\n");
+    }
 }
+
 
 void addpathFunc(int argc, char **argv) {
-    
+    if (argc < 2) {
+        printf("Insufficient arguments. Usage: addpath <variable> <path>\n");
+        return;
+    }
+
+    const char *variable = argv[0];
+    const char *path = argv[1];
+
+    int result = setenv(variable, path, 1);
+
+    if (result == 0) {
+        printf("Successfully set %s=%s\n", variable, path);
+    } else {
+        printf("Failed to set %s=%s\n", variable, path);
+    }
 }
+

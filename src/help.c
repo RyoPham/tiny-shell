@@ -22,19 +22,41 @@ void (*help_list[])(int argc, char **argv) = {
         };
 
 void exitFuncHelp(int argc, char **argv) {
-
+    printf("\n%-10s: Exit the tiny-shell\n", "exit");
+    if(argc == 1){
+        return;
+    }
+    printf("\nUsage: exit\n");
 }
 
 void cdFuncHelp(int argc, char **argv) {
-
+    printf("\n%-10s: Change the current working directory\n", "cd");
+    if(argc == 1){
+        return;
+    }
+    printf("\nUsage: cd [DIRECTORY]\n");
+    printf("  %-10s Show the parent directory of the current directory\n", "..");
+    printf("  %-10s Change the current directory to [DIRECTORY]\n", "[DIRECTORY]");
+    printf("  %-10s Change the current directory to the home directory\n", "~");
 }
 
 void dateFuncHelp(int argc, char **argv) {
-
+   printf("\n%-10s: Display the current date and time\n", "date");
+    if (argc == 1) {
+        return;
+    }
+    printf("\nUsage: date\n");
 }
 
 void dirFuncHelp(int argc, char **argv) {
-
+printf("\n%-10s: List files in the specified directory\n", "dir");
+    if (argc == 1) {
+        return;
+    }
+    printf("\nUsage: dir [path]\n");
+    printf("  %-10s List files and directories in the current directory\n", "");
+    printf("  %-10s List files and directories in the specified [DIRECTORY]\n", "[DIRECTORY]");
+        
 }
 
 void helpFuncHelp(int argc, char **argv) {
@@ -46,11 +68,27 @@ void helpFuncHelp(int argc, char **argv) {
 }
 
 void pathFuncHelp(int argc, char **argv) {
-
+    printf("\n%-10s: Display the value of an environment variable\n", "path");
+    if (argc == 1) {
+        return;
+    } 
+    else {
+        printf("\nUsage: path [VARIABLE]\n");
+        printf("  %-10s  Display the value of the specified environment VARIABLE\n","[VARIABLE]");
+    }
 }
 
-void addpathFuncHelp(int argc, char **argv) {
 
+void addpathFuncHelp(int argc, char **argv) {
+    printf("\n%-14s: Add a directory to the specified environment variable\n", "addpathFunc");
+    if(argc == 1){
+        return;
+    }
+    else{
+        printf("\nUsage: addpathFunc <VARIABLE> <PATH>\n");
+        printf("  %-10s    Specify the environment variable\n", "[VARIABLE]");
+        printf("  %-10s        Specify the directory path to be added\n", "PATH");
+    }
 }
 
 void execFuncHelp(int argc, char **argv) {
