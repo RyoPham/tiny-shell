@@ -1,3 +1,7 @@
+/**
+ * A simple program show current time every 1 second
+*/
+
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>

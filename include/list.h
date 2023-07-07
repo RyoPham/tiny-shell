@@ -1,3 +1,7 @@
+/**
+ * Simple linked-list data structure 
+*/
+
 #ifndef __LIST_H__
 #define __LIST_H__
 

@@ -1,3 +1,10 @@
+/**
+ * This file contains functions print help
+ * for commands supported in tiny-shell
+ * 
+ * Print brief or usage in addition
+*/
+
 #ifndef __HELP_H__
 #define __HELP_H__
 

@@ -1,3 +1,7 @@
+/**
+ * A simple program print "Hello" with its process id
+*/
+
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
