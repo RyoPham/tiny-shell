@@ -37,18 +37,14 @@ void clearFunc(int argc, char **argv) {
 		printf("Error: Too many arguments\n");
 		return;
 	}
-    int pid = fork(), status;
-    if(pid == 0) {
-        execl("/bin/clear", "/bin/clear", (char *)NULL);
-        return;
-    }
-    else {
-        waitpid(pid, &status, 0);
-    }
-}
-
-void do_nothing() {
-	printf("Here we go\n");
+	int pid = fork(), status;
+	if(pid == 0) {
+		execl("/bin/clear", "/bin/clear", (char *)NULL);
+		return;
+	}
+	else {
+		waitpid(pid, &status, 0);
+	}
 }
 
 void execFunc(int argc, char **argv) {
@@ -81,7 +77,6 @@ void execFunc(int argc, char **argv) {
 	int pid = fork(), status;
 	if(pid == 0) {
 		setpgid(0, 0);
-		signal(SIGINT, do_nothing);
 		argc = shiftLeft(argc, argv, 1 + flag_count);
 		if(new_terminal) {
 			argc = shiftRight(argc, argv, 3);
@@ -106,6 +101,50 @@ void execFunc(int argc, char **argv) {
 		waitpid(pid, &status, 0);
 		is_running = 0;
 	}
+}
+
+void runbashFunc(int argc, char **argv) {
+	static char BASH[10] = "/bin/bash";
+	static char BCKG[3] = "-b";
+	static char FREG[3] = "-f";
+	static char TERG[3] = "-B";
+	int background_flag = 0, flag_count = 0, new_terminal = 0;
+	if(!strcmp(argv[1], "-b")) {
+		background_flag = 1; //background mode
+		flag_count = 1;
+	}
+	else if(!strcmp(argv[1], "-B")) {
+		background_flag = 1; //background mode
+		flag_count = 1;
+		new_terminal = 1;
+	}
+	else if(!strcmp(argv[1], "-f")) {
+		background_flag = 0; //foreground mode - default mode
+		flag_count = 1;
+	}
+
+	if(access(argv[1 + flag_count], F_OK)) {
+		printf("%s: No such file\n", argv[1 + flag_count]);
+		return;
+	}
+
+	argc = shiftLeft(argc, argv, flag_count);
+	argv[0] = BASH;
+	argc = shiftRight(argc, argv, 1 + flag_count);
+	if(flag_count) {
+		if(background_flag) {
+			if(new_terminal) {
+				argv[1] = TERG;
+			}
+			else {
+				argv[1] = BCKG;
+			}
+		}
+		else {
+			argv[1] = FREG;
+		}
+	}
+	execFunc(argc, argv);
 }
 
 void listFunc(int argc, char **argv) {
@@ -179,40 +218,58 @@ void listFunc(int argc, char **argv) {
 
 void killFunc(int argc, char **argv) {
 	if(argc < 2) {
-		printf("Usage: kill <process id>\n");
+		printf("Usage: kill <pid1> <pid2> ...\n");
 		return;
 	}
-	if(argc > 2) {
-		printf("Error: Too many arguments\n");
-		return;
+	int i;
+	pid_t pid;
+	for(i = 1; i < argc; ++i) {
+		if(!isNumeric(argv[i])) {
+			printf("\"%s\": arguments must be process IDs\n", argv[i]);
+			continue;
+		}
+		pid = atoi(argv[i]);
+		if(kill(pid, SIGKILL)) {
+			printf("(%u) - No such process\n", pid);
+		}
 	}
-	pid_t pid = atoi(argv[1]);
-	kill(pid, 9); //SIGKILL - 9
 }
 
 void stopFunc(int argc, char **argv) {
 	if(argc < 2) {
-		printf("Usage: resume <process id>\n");
+		printf("Usage: stop <pid1> <pid2> ...\n");
 		return;
 	}
-	if(argc > 2) {
-		printf("Error: Too many arguments\n");
-		return;
+	int i;
+	pid_t pid;
+	for(i = 1; i < argc; ++i) {
+		if(!isNumeric(argv[i])) {
+			printf("\"%s\": arguments must be process IDs\n", argv[i]);
+			continue;
+		}
+		pid = atoi(argv[i]);
+		if(kill(pid, SIGSTOP)) {
+			printf("(%u) - No such process\n", pid);
+		}
 	}
-	pid_t pid = atoi(argv[1]);
-	kill(pid, 19); //SIGSTOP - 19
 }
 
 void resumeFunc(int argc, char **argv) {
 	if(argc < 2) {
-		printf("Usage: resume <process id>\n");
+		printf("Usage: resume <pid1> <pid2> ...\n");
 		return;
 	}
-	if(argc > 2) {
-		printf("Error: Too many arguments\n");
-		return;
+	int i;
+	pid_t pid;
+	for(i = 1; i < argc; ++i) {
+		if(!isNumeric(argv[i])) {
+			printf("\"%s\": arguments must be process IDs\n", argv[i]);
+			continue;
+		}
+		pid = atoi(argv[i]);
+		if(kill(pid, SIGCONT)) {
+			printf("(%u) - No such process\n", pid);
+		}
 	}
-	pid_t pid = atoi(argv[1]);
-	kill(pid, 18); //SIGCONT - 18
 }
 

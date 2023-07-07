@@ -86,8 +86,8 @@ void dirFunc(int argc, char **argv) {
     printf("=========================================================================\n");
 
     while ((entry = readdir(dirp)) != NULL) {
-        char full_path[256];
-        snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
+        char full_path[512];
+        snprintf(full_path, sizeof(full_path) - 2, "%s/%s", path, entry->d_name);
 
         if (lstat(full_path, &file_info) == -1) {
             perror("Failed to get file information");
@@ -109,30 +109,51 @@ void dirFunc(int argc, char **argv) {
     closedir(dirp);
 }
 
+extern char **environ;
+
 void pathFunc(int argc, char **argv) {
-    if (argc > 1) {
-        printf("Too many arguments.\n");
-    } else if (argv != NULL) {
-        char *value = getenv(argv[0]);
-        if (value != NULL) {
-            printf("%s=%s\n", argv[0], value);
-        } else {
-            printf("The environment variable %s does not exist.\n", argv[0]);
+    // if (argc > 1) {
+    //     printf("Too many arguments.\n");
+    // } else if (argv != NULL) {
+    //     char *value = getenv(argv[0]);
+    //     if (value != NULL) {
+    //         printf("%s=%s\n", argv[0], value);
+    //     } else {
+    //         printf("The environment variable %s does not exist.\n", argv[0]);
+    //     }
+    // } else {
+    //     printf("No argument provided.\n");
+    // }
+    if(argc == 1) {
+        char **s = environ;
+        for(; *s; ++s) {
+            printf("%s\n", *s);
         }
-    } else {
-        printf("No argument provided.\n");
+    }
+    else {
+        int i;
+        char *value;
+        for(i = 1; i < argc; ++i) {
+            value = getenv(argv[i]);
+            if(value != NULL) {
+                printf("%s=%s\n", argv[i], value);
+            }
+            else {
+                printf("The environment variable %s does not exist\n", argv[i]);
+            }
+        }
     }
 }
 
 
 void addpathFunc(int argc, char **argv) {
-    if (argc < 2) {
+    if (argc != 3) {
         printf("Insufficient arguments. Usage: addpath <variable> <path>\n");
         return;
     }
 
-    const char *variable = argv[0];
-    const char *path = argv[1];
+    const char *variable = argv[1];
+    const char *path = argv[2];
 
     int result = setenv(variable, path, 1);
 

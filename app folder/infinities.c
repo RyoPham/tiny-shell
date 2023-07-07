@@ -1,3 +1,7 @@
+/**
+ * A simple program creates some non-stop processes (4 processes).
+*/
+
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>

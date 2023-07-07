@@ -1,3 +1,10 @@
+/**
+ * This file contains functions print help
+ * for commands supported in tiny-shell
+ * 
+ * Print brief or usage in addition
+*/
+
 #ifndef __HELP_H__
 #define __HELP_H__
 
@@ -10,6 +17,7 @@ void pathFuncHelp(int argc, char **argv);
 void addpathFuncHelp(int argc, char **argv);
 
 void execFuncHelp(int argc, char **argv);
+void runbashFuncHelp(int argc, char **argv);
 void listFuncHelp(int argc, char **argv);
 void killFuncHelp(int argc, char **argv);
 void stopFuncHelp(int argc, char **argv);
