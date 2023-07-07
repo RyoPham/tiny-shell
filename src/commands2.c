@@ -47,10 +47,6 @@ void clearFunc(int argc, char **argv) {
     }
 }
 
-void do_nothing() {
-	printf("Here we go\n");
-}
-
 void execFunc(int argc, char **argv) {
 	if(argc < 2) {
 		return;
@@ -81,7 +77,6 @@ void execFunc(int argc, char **argv) {
 	int pid = fork(), status;
 	if(pid == 0) {
 		setpgid(0, 0);
-		signal(SIGINT, do_nothing);
 		argc = shiftLeft(argc, argv, 1 + flag_count);
 		if(new_terminal) {
 			argc = shiftRight(argc, argv, 3);
@@ -179,40 +174,58 @@ void listFunc(int argc, char **argv) {
 
 void killFunc(int argc, char **argv) {
 	if(argc < 2) {
-		printf("Usage: kill <process id>\n");
+		printf("Usage: kill <pid1> <pid2> ...\n");
 		return;
 	}
-	if(argc > 2) {
-		printf("Error: Too many arguments\n");
-		return;
+	int i;
+	pid_t pid;
+	for(i = 1; i < argc; ++i) {
+		if(!isNumeric(argv[i])) {
+			printf("\"%s\": arguments must be process IDs\n", argv[i]);
+			continue;
+		}
+		pid = atoi(argv[i]);
+		if(kill(pid, SIGKILL)) {
+			printf("(%u) - No such process\n", pid);
+		}
 	}
-	pid_t pid = atoi(argv[1]);
-	kill(pid, 9); //SIGKILL - 9
 }
 
 void stopFunc(int argc, char **argv) {
 	if(argc < 2) {
-		printf("Usage: resume <process id>\n");
+		printf("Usage: stop <pid1> <pid2> ...\n");
 		return;
 	}
-	if(argc > 2) {
-		printf("Error: Too many arguments\n");
-		return;
+	int i;
+	pid_t pid;
+	for(i = 1; i < argc; ++i) {
+		if(!isNumeric(argv[i])) {
+			printf("\"%s\": arguments must be process IDs\n", argv[i]);
+			continue;
+		}
+		pid = atoi(argv[i]);
+		if(kill(pid, SIGSTOP)) {
+			printf("(%u) - No such process\n", pid);
+		}
 	}
-	pid_t pid = atoi(argv[1]);
-	kill(pid, 19); //SIGSTOP - 19
 }
 
 void resumeFunc(int argc, char **argv) {
 	if(argc < 2) {
-		printf("Usage: resume <process id>\n");
+		printf("Usage: resume <pid1> <pid2> ...\n");
 		return;
 	}
-	if(argc > 2) {
-		printf("Error: Too many arguments\n");
-		return;
+	int i;
+	pid_t pid;
+	for(i = 1; i < argc; ++i) {
+		if(!isNumeric(argv[i])) {
+			printf("\"%s\": arguments must be process IDs\n", argv[i]);
+			continue;
+		}
+		pid = atoi(argv[i]);
+		if(kill(pid, SIGCONT)) {
+			printf("(%u) - No such process\n", pid);
+		}
 	}
-	pid_t pid = atoi(argv[1]);
-	kill(pid, 18); //SIGCONT - 18
 }
 
