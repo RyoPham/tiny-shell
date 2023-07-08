@@ -85,7 +85,7 @@ void addpathFuncHelp(int argc, char **argv) {
         return;
     }
     else{
-        printf("\nUsage: addpathFunc <VARIABLE> <PATH>\n");
+        printf("\nUsage: addpath <VARIABLE> <PATH>\n");
         printf("  %-10s    Specify the environment variable\n", "<VARIABLE>");
         printf("  %-10s    Specify the value for variable\n", "<PATH>");
     }
