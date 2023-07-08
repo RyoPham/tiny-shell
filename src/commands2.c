@@ -161,35 +161,24 @@ void runbatFunc(int argc, char **argv) {
 	}
 
 	char *file_name = argv[1];
-	int status;
-	pid_t pid = fork();
-	if(pid == 0) {
-		FILE *fp;
-		static char buff[SIZE + 5];
-		static char *argv[SIZE + 5];
-		int argc;
+	FILE *fp;
+	static char buff[SIZE + 5];
+	static char *sub_argv[SIZE + 5];
+	int sub_argc;
 
-		fp = fopen(file_name, "r");
-		if(fp == NULL) {
-			printf("%s: File does not exist\n", file_name);
-			exit(0);
-		}
-		while(fgets(buff, SIZE, fp)) {
-			argc = getArgs(buff, argv);
-			// printf("argc = %d\n", argc);
-			// for(int i = 0; i < argc; ++i) {
-			// 	printf("argv[%d] = %s\n", i, argv[i]);
-			// }
-			// printf("===========================\n");
-			run(argc, argv);
-		}
+	fp = fopen(file_name, "r");
+	if(fp == NULL) {
+		printf("%s: File does not exist\n", file_name);
 		exit(0);
 	}
-	else {
-		pid_running = pid;
-		is_running = 1;
-		waitpid(pid, &status, 0);
-		is_running = 0;
+	while(fgets(buff, SIZE, fp)) {
+		sub_argc = getArgs(buff, sub_argv);
+		// printf("argc = %d\n", argc);
+		// for(int i = 0; i < argc; ++i) {
+		// 	printf("argv[%d] = %s\n", i, argv[i]);
+		// }
+		// printf("===========================\n");
+		run(sub_argc, sub_argv);
 	}
 }
 

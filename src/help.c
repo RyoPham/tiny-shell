@@ -117,7 +117,7 @@ void runbashFuncHelp(int argc, char **argv) {
 }
 
 void runbatFuncHelp(int argc, char **argv) {
-    printf("\n%-10s: Execute in foreground mode a list of command lines in a file\n", "runbat");
+    printf("\n%-10s: Execute a list of command lines stored in a file\n", "runbat");
     if(argc == 1) {
         return;
     }
