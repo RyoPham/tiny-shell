@@ -90,6 +90,7 @@ void execFunc(int argc, char **argv) {
 		// 	printf("%s ", argv[i]);
 		// }
 		// printf("\n");
+		argv[argc] = NULL;
 		if(execv(argv[0], argv) == -1) {
 			printf("Executation failed!\n");
 		}
@@ -145,6 +146,51 @@ void runbashFunc(int argc, char **argv) {
 		}
 	}
 	execFunc(argc, argv);
+}
+
+extern int getArgs(char *buff, char **argv);
+
+void runbatFunc(int argc, char **argv) {
+	if(argc == 1) {
+		printf("Usage: runbat <file>\n");
+		return;
+	}
+	if(argc > 2) {
+		printf("Too many arguments\n");
+		return;
+	}
+
+	char *file_name = argv[1];
+	int status;
+	pid_t pid = fork();
+	if(pid == 0) {
+		FILE *fp;
+		static char buff[SIZE + 5];
+		static char *argv[SIZE + 5];
+		int argc;
+
+		fp = fopen(file_name, "r");
+		if(fp == NULL) {
+			printf("%s: File does not exist\n", file_name);
+			exit(0);
+		}
+		while(fgets(buff, SIZE, fp)) {
+			argc = getArgs(buff, argv);
+			// printf("argc = %d\n", argc);
+			// for(int i = 0; i < argc; ++i) {
+			// 	printf("argv[%d] = %s\n", i, argv[i]);
+			// }
+			// printf("===========================\n");
+			run(argc, argv);
+		}
+		exit(0);
+	}
+	else {
+		pid_running = pid;
+		is_running = 1;
+		waitpid(pid, &status, 0);
+		is_running = 0;
+	}
 }
 
 void listFunc(int argc, char **argv) {

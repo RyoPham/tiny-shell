@@ -18,6 +18,7 @@ void addpathFuncHelp(int argc, char **argv);
 
 void execFuncHelp(int argc, char **argv);
 void runbashFuncHelp(int argc, char **argv);
+void runbatFuncHelp(int argc, char **argv);
 void listFuncHelp(int argc, char **argv);
 void killFuncHelp(int argc, char **argv);
 void stopFuncHelp(int argc, char **argv);

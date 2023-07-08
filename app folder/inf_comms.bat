@@ -1,0 +1,2 @@
+exec hello
+exec infinities

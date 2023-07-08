@@ -13,6 +13,7 @@ void addpathFunc(int argc, char **argv);
 
 void execFunc(int argc, char **argv);
 void runbashFunc(int argc, char **argv);
+void runbatFunc(int argc, char **argv);
 void listFunc(int argc, char **argv);
 void killFunc(int argc, char **argv);
 void stopFunc(int argc, char **argv);
