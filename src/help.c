@@ -13,6 +13,7 @@ void (*help_list[])(int argc, char **argv) = {
         helpFuncHelp, 
         execFuncHelp, 
         runbashFuncHelp,
+        runbatFuncHelp,
         listFuncHelp, 
         killFuncHelp, 
         stopFuncHelp, 
@@ -113,6 +114,14 @@ void runbashFuncHelp(int argc, char **argv) {
     printf("  %-10s foreground mode\n", "-f");
     printf("  %-10s background mode (not recommend)\n", "-b");
     printf("  %-10s create process in other terminal\n", "-B");
+}
+
+void runbatFuncHelp(int argc, char **argv) {
+    printf("\n%-10s: Execute a list of command lines stored in a file\n", "runbat");
+    if(argc == 1) {
+        return;
+    }
+    printf("\nUsage: runbat <file>\n");
 }
 
 void listFuncHelp(int argc, char **argv) {

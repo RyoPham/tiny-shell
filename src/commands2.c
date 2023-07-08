@@ -90,6 +90,7 @@ void execFunc(int argc, char **argv) {
 		// 	printf("%s ", argv[i]);
 		// }
 		// printf("\n");
+		argv[argc] = NULL;
 		if(execv(argv[0], argv) == -1) {
 			printf("Executation failed!\n");
 		}
@@ -145,6 +146,40 @@ void runbashFunc(int argc, char **argv) {
 		}
 	}
 	execFunc(argc, argv);
+}
+
+extern int getArgs(char *buff, char **argv);
+
+void runbatFunc(int argc, char **argv) {
+	if(argc == 1) {
+		printf("Usage: runbat <file>\n");
+		return;
+	}
+	if(argc > 2) {
+		printf("Too many arguments\n");
+		return;
+	}
+
+	char *file_name = argv[1];
+	FILE *fp;
+	static char buff[SIZE + 5];
+	static char *sub_argv[SIZE + 5];
+	int sub_argc;
+
+	fp = fopen(file_name, "r");
+	if(fp == NULL) {
+		printf("%s: File does not exist\n", file_name);
+		exit(0);
+	}
+	while(fgets(buff, SIZE, fp)) {
+		sub_argc = getArgs(buff, sub_argv);
+		// printf("argc = %d\n", argc);
+		// for(int i = 0; i < argc; ++i) {
+		// 	printf("argv[%d] = %s\n", i, argv[i]);
+		// }
+		// printf("===========================\n");
+		run(sub_argc, sub_argv);
+	}
 }
 
 void listFunc(int argc, char **argv) {

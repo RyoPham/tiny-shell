@@ -42,10 +42,11 @@ make clean
     - ```path/addpath```: Xem và cài đặt biến môi trường
 - **tiny-shell** nhận tín hiệu ngắt từ bàn phím (Ctrl+C) để hủy bỏ foreground process (nếu có)
 - Hỗ trợ câu lệnh dùng để thực thi file ***.sh***
+- Hỗ trợ câu lệnh đọc một file thực thi từng dòng lệnh hỗ trợ trong tiny-shell
 
 ## System Requirement
 - Hệ điều hành: ***Linux***
-- Chip xử lý: ***x86, ARM***
+<!-- - Chip xử lý: ***x86, ARM*** -->
 
 ## Contributor
 

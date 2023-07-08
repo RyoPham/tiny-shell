@@ -15,9 +15,9 @@ char buff[SIZE + 5], dir[SIZE + 5];
 char *argv[SIZE + 5];
 int argc;
 
-void getArgs() {
+int getArgs(char *buff, char **argv) {
 	int i = 0, j;
-	argc = 0;
+	int argc = 0;
 	while(buff[i] != '\0') {
 		if(isspace(buff[i])) {
 			++i;
@@ -60,6 +60,7 @@ void getArgs() {
 		}
 	}
 	argv[argc] = NULL;
+	return argc;
 }	
 
 void sigintHandler() {
@@ -78,7 +79,7 @@ int main(void) {
 		getcwd(dir, SIZE);
 		printf("(tiny shell) %s>", dir);
 		fgets(buff, SIZE, stdin);
-		getArgs();
+		argc = getArgs(buff, argv);
 		killZombies();
 		// printf("argc = %d\n", argc);
 		// printf("argv[] = [");

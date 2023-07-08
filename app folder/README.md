@@ -11,3 +11,6 @@ Xóa các chương trình sinh bởi make trong thư mục này bằng lệnh:
 ```
 make clean
 ```
+
+# Note
+Các file ***.bat*** là các file chứa các dòng lệnh chạy trong tiny-shell
