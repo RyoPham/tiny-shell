@@ -131,6 +131,14 @@ void pathFunc(int argc, char **argv) {
             printf("%s\n", *s);
         }
     }
+    else if (strcmp(argv[1],"-r") == 0){
+        for(int i = 2; i < argc; i++){
+            int result = unsetenv(argv[i]);
+            if(result == -1){
+                printf("%s: Error\n", argv[i]);
+            }
+        }
+    }
     else {
         int i;
         char *value;
