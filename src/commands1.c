@@ -10,6 +10,7 @@
 
 void exitFunc(int argc, char **argv) {
     while(killChild()) {
+        sleep(1);
         killZombies();
     }
 	exit(0);
