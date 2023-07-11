@@ -70,12 +70,13 @@ void helpFuncHelp(int argc, char **argv) {
 }
 
 void pathFuncHelp(int argc, char **argv) {
-    printf("\n%-10s: Display value of an environment variable (display all by default)\n", "path");
+    printf("\n%-10s: Display value of an environment variable (display all by default). Optional delete.\n", "path");
     if (argc == 1) {
         return;
     } 
     else {
-        printf("\nUsage: path [var1] [var2] ...\n");
+        printf("\nUsage: path [OPTION] [var1] [var2] ...\n");
+        printf("  %-10s    Delete the environment variables\n", "-r");
     }
 }
 
